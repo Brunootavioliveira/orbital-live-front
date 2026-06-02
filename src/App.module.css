@@ -6,7 +6,6 @@
   color: white;
 }
 
-/* ─── Header ─── */
 .header {
   display: flex;
   align-items: center;
@@ -64,7 +63,6 @@
   letter-spacing: 0.05em;
 }
 
-/* ─── Main Layout ─── */
 .main {
   display: grid;
   grid-template-columns: 260px 1fr 140px;
@@ -126,13 +124,11 @@
   letter-spacing: 0.08em;
 }
 
-/* ─── Planet list strip ─── */
 .listSection {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(255, 255, 255, 0.015);
 }
 
-/* ─── Footer ─── */
 .footer {
   padding: 10px 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -151,7 +147,6 @@
   color: rgba(255, 255, 255, 0.1);
 }
 
-/* ─── Responsive ─── */
 @media (max-width: 900px) {
   .main {
     grid-template-columns: 1fr;

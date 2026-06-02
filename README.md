@@ -1,16 +1,86 @@
-# React + Vite
+# orbital-live-front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web em tempo real das posições dos planetas do sistema solar, usando dados da NASA JPL Horizons.
 
-Currently, two official plugins are available:
+**Live:** https://orbital-live-front.brunootavioliveira.workers.dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + Vite
+- CSS Modules
+- STOMP / SockJS (WebSocket)
+- Hospedado no Cloudflare Pages (Workers)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Funcionalidades
+
+- Mapa heliocêntrico SVG com posições reais dos planetas (plano XY eclíptico)
+- Zoom com scroll do mouse e slider; pan arrastando o canvas
+- Tooltip com coordenadas X, Y e distância do Sol ao passar o mouse sobre um planeta
+- Painel lateral com detalhes do planeta selecionado
+- Atualização em tempo real via WebSocket (fallback para polling REST a cada 30s)
+- Badge de status da conexão (live / polling / offline)
+
+---
+
+## Estrutura
+
+```
+src/
+├── components/
+│   ├── SolarCanvas.jsx       # Mapa SVG interativo
+│   ├── PlanetPanel.jsx       # Painel lateral de detalhes
+│   ├── PlanetList.jsx        # Lista de planetas no rodapé
+│   ├── StatusBadge.jsx       # Indicador de conexão
+│   └── OfflineBanner.jsx     # Banner de modo offline
+├── hooks/
+│   └── usePlanetPositions.js # Hook de dados (WebSocket + REST)
+├── services/
+│   ├── api.js                # Chamadas REST
+│   └── websocket.js          # Cliente STOMP
+└── utils/
+    └── planets.js            # Metadados e utilitários dos planetas
+```
+
+---
+
+## Instalação
+
+```bash
+npm install
+npm run dev
+```
+
+A aplicação sobe em `http://localhost:5173`.
+
+---
+
+## Build
+
+```bash
+npm run build
+```
+
+O output é gerado em `dist/`.
+
+---
+
+## Configuração
+
+A URL do backend está definida em `src/services/api.js`:
+
+```js
+const BASE_URL = 'https://orbital-live-production.up.railway.app';
+```
+
+Para apontar para um backend local, altere para `http://localhost:8080`.
+
+---
+
+## Backend
+
+O backend que alimenta este frontend está em:
+https://github.com/Brunootavioliveira/orbital-live

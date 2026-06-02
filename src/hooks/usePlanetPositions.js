@@ -27,7 +27,6 @@ export function usePlanetPositions() {
   }, []);
 
   useEffect(() => {
-    // Try REST first for instant data
     fetchAllPlanets()
       .then((data) => {
         setPlanets(data);
@@ -35,7 +34,6 @@ export function usePlanetPositions() {
       })
       .catch(() => {});
 
-    // Then connect WebSocket
     const client = createSolarClient({
       onConnect: () => {
         setStatus('live');
@@ -61,7 +59,6 @@ export function usePlanetPositions() {
     clientRef.current = client;
     client.activate();
 
-    // If WS doesn't connect in 8s, fall back to polling
     const fallbackTimer = setTimeout(() => {
       if (status === 'connecting') startPolling();
     }, 8000);
